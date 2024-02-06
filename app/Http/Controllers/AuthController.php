@@ -20,16 +20,18 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|max:255',
             'email'=>'required|string|unique:users',
             'password'=>'required|string|min:8',
-            'c_password' => 'required|same:password'
+            'c_password' => 'required|same:password',
+            // 'role' => 'required'
         ]);
 
         $user = new User([
             'name'  => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'role' => 'customer'
         ]);
 
         if($user->save()){
@@ -49,7 +51,7 @@ class AuthController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|max:255',
             'password'=>'required|string|min:8',
             'c_password'=>'required|same:password'
         ]);
