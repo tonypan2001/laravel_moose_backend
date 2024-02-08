@@ -37,7 +37,7 @@ class AuthController extends Controller
         if($user->save()){
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->plainTextToken;
-
+            $user->refresh();
             return response()->json([
             'message' => 'Successfully created user!',
             'accessToken'=> $token,
@@ -50,22 +50,30 @@ class AuthController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'password'=>'required|string|min:8',
-            'c_password'=>'required|same:password'
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'password'=>'required|string|min:8',
+        //     'c_password'=>'required|same:password'
+        // ]);
 
-        if ($request->has('name')) {
+        // if ($request->has('name')) {
+        //     $user->name = $request->name;
+        // }
+        
+        // if ($request->has('password')) {
+        //     $user->password = bcrypt($request->password);
+        // }
+        if ($request->name != null) {
             $user->name = $request->name;
         }
-        
-        if ($request->has('password')) {
+
+        if ($request->password != null) {
             $user->password = bcrypt($request->password);
         }
 
         if ($user->save())
         {
+            $user->refresh();
             return response()->json([
                 'message'=>'Update user information successfully.',
                 'user'=>$user

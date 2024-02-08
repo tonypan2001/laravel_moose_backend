@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -31,4 +32,10 @@ Route::group(['prefix' => 'auth'], function () {
       Route::get('user', [AuthController::class, 'user']);
       Route::put('update/{user}', [AuthController::class, 'update']);
     });
+});
+
+Route::group(['prefix' => 'product'], function() {
+  Route::get('product', [ProductController::class, 'index']);
+  Route::post('create', [ProductController::class, 'store']);
+  Route::put('update/{product}', [ProductController::class, 'update']);
 });

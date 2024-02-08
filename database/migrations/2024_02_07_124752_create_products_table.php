@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('productName');
-            $table->foreignIdFor(\App\Models\Category::class);
+            // $table->foreignIdFor(\App\Models\Category::class);
             $table->string('imgPath')->nullable();
             $table->string('description');
             $table->enum('status', ['available', 'outOfStock']);
